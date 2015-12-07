@@ -37,7 +37,6 @@ class MailgunTransport extends AbstractTransport
 		'o:tracking-clicks' => 'o:tracking-clicks',
 		'o:tracking-opens' => 'o:tracking-opens'
 	);
-
 	protected $_mailgunCustomDataPrefix = 'v:';
 
 	/**
@@ -54,11 +53,9 @@ class MailgunTransport extends AbstractTransport
 
 		//'_headers' will include all extra tags that may be related to mailgun fields with prefix 'o:' or custom data with prefix 'v:'
 		$emailHeaders = ['from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc', 'bcc', 'subject', '_headers'];
-		
-		$headers = $email->getHeaders($emailHeaders);
 
-		foreach ($headers as $header => $value) {
-			if (isset($this->_paramMapping[$header]) && !empty($value)) {  //empty params are not excepted by mailgun, throws error
+		foreach ($email->getHeaders($emailHeaders) as $header => $value) {
+			if (isset($this->_paramMapping[$header]) && !empty($value)) { //empty params are not excepted by mailgun, throws error
 				$key = $this->_paramMapping[$header];
 				$params[$key] = $value;
 				continue;
@@ -75,9 +72,14 @@ class MailgunTransport extends AbstractTransport
 		$params['html'] = $email->message(Email::MESSAGE_HTML);
 		$params['text'] = $email->message(Email::MESSAGE_TEXT);
 
+		$attachments = array();
+		foreach ($email->attachments() as $name => $file) {
+			$attachments['attachment'][] = ['filePath' => '@' . $file['file'], 'remoteName' => $name];
+		}
+
 		try {
 			$mailgun = new Mailgun\Mailgun($config['mailgun_api_key']);
-			$result = $mailgun->sendMessage($config['mailgun_domain'], $params);
+			$result = $mailgun->sendMessage($config['mailgun_domain'], $params, $attachments);
 
 			if ($result->http_response_code != 200) {
 				throw new Exception($result->http_response_body->message);

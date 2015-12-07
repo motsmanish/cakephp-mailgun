@@ -52,6 +52,11 @@ $result = $email->from(['me@example.com' => 'My Site'])
 	->addHeaders(['v:my-custom-data' => json_encode(['max' => 'testing'])])
 	->readReceipt('admin@example.com')
 	->returnPath('bounce@example.com')
+	->attachments([
+		'cake_icon1.png' => Configure::read('App.imageBaseUrl') . 'cake.icon.png',
+		'cake_icon2.png' => ['file' => Configure::read('App.imageBaseUrl') . 'cake.icon.png'],
+		WWW_ROOT . 'favicon.ico'
+	]);
 	->send('How are you?');
 
 ```
