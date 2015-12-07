@@ -60,8 +60,3 @@ $result = $email->from(['me@example.com' => 'My Site'])
 	->send('How are you?');
 
 ```
-
-## Todo
-
-* Attachments
-* Test cases
