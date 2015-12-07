@@ -48,12 +48,15 @@ $result = $email->from(['me@example.com' => 'My Site'])
 	->template('get_in_touch')
 	->emailFormat('both')
 	->viewVars(['to' => 'You', 'from' => 'Me'])
+	->addHeaders(['o:tag' => 'testing'])
+	->addHeaders(['v:my-custom-data' => json_encode(['max' => 'testing'])])
+	->readReceipt('admin@example.com')
+	->returnPath('bounce@example.com')
 	->send('How are you?');
 
 ```
 
 ## Todo
 
-* Add Support for other email parameters (cc,bcc etc)
 * Attachments
 * Test cases
