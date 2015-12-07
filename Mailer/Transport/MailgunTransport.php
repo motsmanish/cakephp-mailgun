@@ -17,7 +17,7 @@ class MailgunTransport extends AbstractTransport
 	 * Send email via Mailgun SDK
 	 *
 	 * @param Email $email
-	 * @return \Cake\Database\Type\BoolType
+	 * @return array
 	 * @throws Exception
 	 */
 	public function send(Email $email)
