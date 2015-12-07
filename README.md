@@ -10,9 +10,9 @@ Send mail via Mailgun SDK in CakePHP 3.0
 
 ## Installation Steps
 
-1) Install Mailgun SDK with composer `add "mailgun/mailgun-php" : "1.8"` in require array of composer.json and run `composer update`
-2) Copy the file MailgunTransport.php in 'src/Mailer/Transport/' folder
-3) Add configuration in app.php
+* 1) Install Mailgun SDK with composer `add "mailgun/mailgun-php" : "1.8"` in require array of composer.json and run `composer update`
+* 2) Copy the file MailgunTransport.php in 'src/Mailer/Transport/' folder
+* 3) Add configuration in app.php
 
 ```php
 'EmailTransport' => [
