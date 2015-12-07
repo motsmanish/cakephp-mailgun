@@ -45,18 +45,24 @@ $email = new Email('mailgun');
 $result = $email->from(['me@example.com' => 'My Site'])
 	->to('you@example.com')
 	->subject('Hello')
-	->template('get_in_touch')
-	->emailFormat('both')
-	->viewVars(['to' => 'You', 'from' => 'Me'])
+	
+	//->template('get_in_touch')
+	//->viewVars(['to' => 'You', 'from' => 'Me'])
+	//->emailFormat('both')
+	
 	->addHeaders(['o:tag' => 'testing'])
+	->addHeaders(['o:deliverytime' => strtotime('+1 Min')]);
 	->addHeaders(['v:my-custom-data' => json_encode(['max' => 'testing'])])
+	
 	->readReceipt('admin@example.com')
 	->returnPath('bounce@example.com')
+	
 	->attachments([
 		'cake_icon1.png' => Configure::read('App.imageBaseUrl') . 'cake.icon.png',
 		'cake_icon2.png' => ['file' => Configure::read('App.imageBaseUrl') . 'cake.icon.png'],
 		WWW_ROOT . 'favicon.ico'
 	]);
+	
 	->send('How are you?');
 
 ```
