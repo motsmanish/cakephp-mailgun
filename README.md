@@ -15,7 +15,7 @@ Send mail using Mailgun SDK and CakePHP 3.0 (Quick and dirty code for now)
 3) Add your mailgun api key and domain as constants (MAILGUN_API_KEY, MAILGUN_API_DOMAIN) in boostrap.php 
 4) Add configuration in app.php
 
-```json
+```php
 'EmailTransport' => [
 		'default' => [
 			...
@@ -30,6 +30,8 @@ Send mail using Mailgun SDK and CakePHP 3.0 (Quick and dirty code for now)
 		],
 		'mailgun' => [
 			'transport' => 'mailgun',
+			'mailgun_domain' => 'example.com',
+			'mailgun_api_key' => 'key-xxxxxxxxxxxxxxxxxxxxxxxxx'
 		],
 	],
 ```

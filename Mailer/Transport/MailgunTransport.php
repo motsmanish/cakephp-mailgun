@@ -13,37 +13,44 @@ use Mailgun;
 class MailgunTransport extends AbstractTransport
 {
 
+	/**
+	 * Send email via Mailgun SDK
+	 *
+	 * @param Email $email
+	 * @return \Cake\Database\Type\BoolType
+	 * @throws Exception
+	 */
 	public function send(Email $email)
 	{
+		$config = $email->profile();
+
 		$headers = $email->getHeaders(['from', 'replyTo', 'to']);
 		$subject = $email->subject();
+
 		$message['html'] = $email->message(Email::MESSAGE_HTML);
 		$message['text'] = $email->message(Email::MESSAGE_TEXT);
 
 		try {
-			$response = $this->_mailgun($subject, $message, $headers);
-			$error = null;
+			$params = array(
+				'from' => $headers['From'],
+				'to' => $headers['To'],
+				'h:reply-to' => $headers['Reply-To'],
+				'subject' => $subject,
+				'text' => $message['text'],
+				'html' => $message['html']
+			);
+
+			$mailgun = new Mailgun\Mailgun($config['mailgun_api_key']);
+			$result = $mailgun->sendMessage($config['mailgun_domain'], $params);
+
+			if ($result->http_response_code != 200) {
+				throw new Exception($result->http_response_body->message);
+			}
 		} catch (Exception $exc) {
-			$response = false;
-			$error = $exc->getMessage();
+			throw $exc;
 		}
-		return ['headers' => $headers, 'message' => $message, 'response' => $response, 'error' => $error];
+
+		return $result;
 	}
 
-	protected function _mailgun($subject, $message, $headers)
-	{
-		$params = array(
-			'from' => $headers['From'],
-			'to' => $headers['To'],
-			'h:reply-to' => $headers['Reply-To'],
-			'subject' => $subject,
-			'text' => $message['text'],
-			'html' => $message['html']
-		);
-
-		$email = new Mailgun\Mailgun(MAILGUN_API_KEY);
-		$result = $email->sendMessage(MAILGUN_API_DOMAIN, $params);
-		$response = ($result->http_response_code == 200) ? true : false;
-		return $response;
-	}
 }
