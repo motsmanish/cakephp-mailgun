@@ -14,8 +14,7 @@ Send mail via Mailgun SDK in CakePHP 3.0
 * 2) Copy the file MailgunTransport.php in 'src/Mailer/Transport/' folder
 * 3) Add configuration in app.php
 
-```json
-{
+```php
 'EmailTransport' => [
 		'default' => [
 			...
@@ -34,7 +33,6 @@ Send mail via Mailgun SDK in CakePHP 3.0
 			'mailgun_api_key' => 'key-xxxxxxxxxxxxxxxxxxxxxxxxx'
 		],
 	],
-}
 ```
 
 And you are good to go.
