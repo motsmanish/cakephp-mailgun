@@ -1,6 +1,6 @@
 {
     "name": "motsmanish/cakephp-mailgun",
-    "type": "library",
+    "type": "cakephp-plugin",
     "description": "Send mail via Mailgun SDK in CakePHP 3.0",
     "keywords": ["email","mailgun","cakephp","cakephp3","transport"],
     "homepage": "https://github.com/motsmanish/cakephp-mailgun",
@@ -14,7 +14,12 @@
     ],
     "require": {
         "php": ">=5.4.16",
-	"cakephp/cakephp": "~3"
+	"cakephp/cakephp": "~3",
+	"mailgun/mailgun-php" : "~1.7.2"
+    },
+    "support": {
+        "issues": "https://github.com/motsmanish/cakephp-mailgun/issues",
+        "source": "https://github.com/motsmanish/cakephp-mailgun"
     },
     "autoload": {
         "psr-4": {
