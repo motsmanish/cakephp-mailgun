@@ -1,6 +1,6 @@
 <?php
 
-namespace MailgunCakeEmail;
+namespace MailgunEmail\Mailer\Transport;
 
 use Cake\Mailer\AbstractTransport;
 use Cake\Mailer\Email;

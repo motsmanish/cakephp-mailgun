@@ -5,20 +5,18 @@ Send mail via Mailgun SDK in CakePHP 3.0
 ## Requirements
 
 * PHP 5.4+
-* Mailgun SDK
-* Composer
+* Mailgun SDK ~1.7.2
+* CakePHP 3.x
 
 ## Installation Steps
 
-* 1) Install Mailgun SDK with composer 
+* 1) Install using composer 
 
 ```PHP
-composer require mailgun/mailgun-php:~1.7.2
+composer require motsmanish/cakephp-mailgun
 ```
 
-* 2) Copy the file MailgunTransport.php in 'src/Mailer/Transport/' folder
-
-* 3) Add configuration in app.php
+* 2) Updated configuration in app.php
 
 ```php
 'EmailTransport' => [
@@ -26,7 +24,7 @@ composer require mailgun/mailgun-php:~1.7.2
 			...
 		],
 		'mailgun' => [
-			'className' => 'Mailgun',
+			 'className' => 'MailgunEmail\Mailer\Transport\MailgunTransport'
 		],
 	],
 	'Email' => [
@@ -57,7 +55,7 @@ $result = $email->from(['me@example.com' => 'My Site'])
 	//->emailFormat('both')
 	
 	->addHeaders(['o:tag' => 'testing'])
-	->addHeaders(['o:deliverytime' => strtotime('+1 Min')]);
+	->addHeaders(['o:deliverytime' => strtotime('+1 Min')])
 	->addHeaders(['v:my-custom-data' => json_encode(['max' => 'testing'])])
 	
 	->readReceipt('admin@example.com')
@@ -67,7 +65,7 @@ $result = $email->from(['me@example.com' => 'My Site'])
 		'cake_icon1.png' => Configure::read('App.imageBaseUrl') . 'cake.icon.png',
 		'cake_icon2.png' => ['file' => Configure::read('App.imageBaseUrl') . 'cake.icon.png'],
 		WWW_ROOT . 'favicon.ico'
-	]);
+	])
 	
 	->send('How are you?');
 
