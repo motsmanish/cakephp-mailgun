@@ -1,0 +1,19 @@
+{
+    "name": "motsmanish/cakephp-mailgun",
+    "type": "library",
+    "description": "Send mail via Mailgun SDK in CakePHP 3.0",
+    "keywords": ["email","mailgun","cakephp","cakephp3","transport"],
+    "homepage": "https://github.com/motsmanish/cakephp-mailgun",
+    "license": "",
+    "authors": [
+        {
+            "name": "Manish Motwani",
+            "email": "manishpmotwani@gmail.com",
+            "homepage": "http://ManishMotwani.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    }
+}
