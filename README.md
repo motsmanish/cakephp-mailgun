@@ -45,6 +45,10 @@ And you are good to go.
 
 ```php
 
+// load Email class
+use Cake\Mailer\Email;
+
+// send mail by setting all the required properties 
 $email = new Email('mailgun');
 $result = $email->from(['me@example.com' => 'My Site'])
 	->to('you@example.com')
