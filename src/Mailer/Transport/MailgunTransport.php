@@ -5,6 +5,7 @@ namespace MailgunEmail\Mailer\Transport;
 use Cake\Mailer\AbstractTransport;
 use Cake\Mailer\Email;
 use Mailgun;
+use Cake\Core\Exception\Exception;
 
 /**
  * Send mail using Mailgun
