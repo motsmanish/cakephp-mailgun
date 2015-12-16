@@ -33,8 +33,9 @@ composer require motsmanish/cakephp-mailgun
 		],
 		'mailgun' => [
 			'transport' => 'mailgun',
-			'mailgun_domain' => 'example.com',
-			'mailgun_api_key' => 'key-xxxxxxxxxxxxxxxxxxxxxxxxx'
+			'mailgun_domain' => 'example.com', //required
+			'mailgun_api_key' => 'key-xxxxxxxxxxxxxxxxxxxxxxxxx',  //required
+			'mailgun_postbin_id' => '' //optional, provide postbin id only when you want to debug messages on http://bin.mailgun.net/ instead of actually sending
 		],
 	],
 ```

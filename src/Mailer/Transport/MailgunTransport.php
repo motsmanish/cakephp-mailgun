@@ -38,7 +38,7 @@ class MailgunTransport extends AbstractTransport
 	    'o:tracking-clicks' => 'o:tracking-clicks',
 	    'o:tracking-opens' => 'o:tracking-opens'
 	);
-	protected $MailgunCustomDataPrefix = 'v:';
+	private $MailgunCustomDataPrefix = 'v:';
 
 	/**
 	 * Send email via Mailgun SDK
@@ -78,10 +78,28 @@ class MailgunTransport extends AbstractTransport
 		return $this->mailgun($config, $params, $attachments);
 	}
 
+	/**
+	 * Connect and submit email to Mailgun API Endpoint
+	 *
+	 * @param array $config API endpoint credentials
+	 * @param array $params params as per mailgun key value format
+	 * @param array $attachments attachments as per mailgun format
+	 * @return \stdClass $result containing status code and message
+	 * @throws Exception
+	 */
 	private function mailgun($config, $params, $attachments)
 	{
+		if (empty($config['mailgun_api_key']) || empty($config['mailgun_domain'])) {
+			throw new Exception('Mailgun API Key & Domain cannot be empty');
+		}
+
 		try {
-			$mailgun = new Mailgun\Mailgun($config['mailgun_api_key']);
+			if (isset($config['mailgun_postbin_id']) && !empty($config['mailgun_postbin_id'])) {
+				$mailgun = new Mailgun\Mailgun($config['mailgun_api_key'], 'bin.mailgun.net', $config['mailgun_postbin_id'], false);
+			} else {
+				$mailgun = new Mailgun\Mailgun($config['mailgun_api_key']);
+			}
+
 			$result = $mailgun->sendMessage($config['mailgun_domain'], $params, $attachments);
 
 			if ($result->http_response_code != 200) {
@@ -94,9 +112,17 @@ class MailgunTransport extends AbstractTransport
 		return $result;
 	}
 
+	/**
+	 * To check valid Custom data format
+	 *
+	 * @param type $header
+	 * @param type $value
+	 * @return boolean
+	 */
 	private function isDataCustom($header, $value)
 	{
 		$return = false;
+
 		if (strpos($header, $this->MailgunCustomDataPrefix) === 0 && !empty($value)) {
 			$json = json_decode($value);
 			if (!is_null($json) && json_last_error() === JSON_ERROR_NONE) { //Custom data must be in json format
