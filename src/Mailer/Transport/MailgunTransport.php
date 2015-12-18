@@ -44,7 +44,7 @@ class MailgunTransport extends AbstractTransport
 	 * Send email via Mailgun SDK
 	 *
 	 * @param Email $email
-	 * @return array
+	 * @return \stdClass $result containing status code and message
 	 * @throws Exception
 	 */
 	public function send(Email $email)
@@ -125,7 +125,7 @@ class MailgunTransport extends AbstractTransport
 
 		if (strpos($header, $this->MailgunCustomDataPrefix) === 0 && !empty($value)) {
 			$json = json_decode($value);
-			if (!is_null($json) && json_last_error() === JSON_ERROR_NONE) { //Custom data must be in json format
+			if (!is_null($json) && json_last_error() === JSON_ERROR_NONE) { //Custom data must be a valid json
 				$return = true;
 			}
 			// if custom data detected, but not valid json, then skip, do not throw error as mailgun does.
